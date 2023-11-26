@@ -1,0 +1,137 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                                  Hybrid Trading RSI Divergence MT4                                          |
+//|                                                          forexroboteasy.com                                                       |
+//|                                                   Developed by Forex Robot Easy Team                                          |
+//+------------------------------------------------------------------+
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+
+// Define constants
+#define MAGIC_NUMBER 123456    // Unique identifier for the robot's trades
+
+// Define global variables
+CTrade trade;                 // Trade object for executing trades
+
+//+------------------------------------------------------------------+
+//|                                                   OnInit Function                                                            |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   // Set the Magic Number for the trade
+   trade.SetExpertMagicNumber(MAGIC_NUMBER);
+   
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//|                                              OnTick Function - Entry Point                                               |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Check for divergences using RSI Divergence Indicator
+   if (CheckRSIDivergence())
+   {
+      // Open a position based on the detected divergence
+      OpenPosition();
+   }
+   
+   // Check for trailing stop if market moves according to the position
+   if (CheckTrailingStop())
+   {
+      // Adjust the stop loss
+      AdjustStopLoss();
+   }
+   
+   // Check for new divergence to add a new position
+   if (CheckNewDivergence())
+   {
+      // Add a new position
+      AddPosition();
+   }
+}
+
+//+------------------------------------------------------------------+
+//|                                            Check RSI Divergence Function                                             |
+//|                                             Returns true if divergence detected                                          |
+//+------------------------------------------------------------------+
+bool CheckRSIDivergence()
+{
+   // Implement the RSI Divergence Indicator here
+   // Return true if divergence detected, otherwise false
+}
+
+//+------------------------------------------------------------------+
+//|                                             Open Position Function                                                 |
+//|                                                  Opens a new position                                                      |
+//+------------------------------------------------------------------+
+void OpenPosition()
+{
+   // Implement code to open a position based on the detected divergence
+   
+   // Example code:
+   trade.Buy(0.1);    // Open a buy position with lot size 0.1
+}
+
+//+------------------------------------------------------------------+
+//|                                            Check Trailing Stop Function                                              |
+//|                                          Returns true if trailing stop should be adjusted                             |
+//+------------------------------------------------------------------+
+bool CheckTrailingStop()
+{
+   // Implement code to check if trailing stop should be adjusted
+   
+   // Example code:
+   if (trade.GetProfit() > 50)    // If profit is more than 50 pips
+      return true;
+      
+   return false;
+}
+
+//+------------------------------------------------------------------+
+//|                                           Adjust Stop Loss Function                                               |
+//|                                          Adjusts the stop loss for the open position                                 |
+//+------------------------------------------------------------------+
+void AdjustStopLoss()
+{
+   // Implement code to adjust the stop loss for the open position
+   
+   // Example code:
+   double currentStopLoss = trade.GetStopLoss();
+   double newStopLoss = currentStopLoss - 10;    // Move the stop loss 10 pips below the current price
+   
+   trade.ModifyStopLoss(newStopLoss);
+}
+
+//+------------------------------------------------------------------+
+//|                                             Check New Divergence Function                                            |
+//|                                             Returns true if new divergence detected                                    |
+//+------------------------------------------------------------------+
+bool CheckNewDivergence()
+{
+   // Implement code to check if new divergence is detected
+   
+   // Example code:
+   // Return true or false based on the condition
+}
+
+//+------------------------------------------------------------------+
+//|                                               Add Position Function                                                  |
+//|                                                   Adds a new position                                                      |
+//+------------------------------------------------------------------+
+void AddPosition()
+{
+   // Implement code to add a new position based on the new divergence
+   
+   // Example code:
+   trade.Buy(0.2);    // Open a buy position with lot size 0.2
+}
+
+//+------------------------------------------------------------------+
+//|                                                OnDeinit Function                                                          |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Perform any cleanup or logging operations before the EA is stopped
+}
